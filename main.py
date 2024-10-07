@@ -18,6 +18,11 @@ def avaliar_jogo(games, motor):
             try:
                 resultado = motor.analyse(game["tabuleiro"], chess.engine.Limit(time=1.0, depth=15))
                 score = resultado['score']
+                if score.is_mate():
+                    if game["tabuleiro"].turn == True:
+                        game["white_check"] =  game["white_check"] + 1 
+                    else: 
+                        game["black_check"] = game["white_check"] + 1
                 if not isinstance(score.relative.score() , int):
                     continue
                 game["avaliacoes"].append(score.relative.score() / 100)  # Converte centipawns para peões
